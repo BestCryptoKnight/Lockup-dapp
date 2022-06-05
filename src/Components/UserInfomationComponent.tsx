@@ -335,10 +335,11 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
             width: 100,
             hideable: false,
             renderCell: (params: any) => {
-                const onClick = (e: any) => {
+                const onClick = async(e: any) => {
                     e.stopPropagation(); // don't select this row after clicking
-                    if (!isWidthdraw(params.row.name)) {
+                    if (!await isWidthdraw(params.row.name)) {
                         setErrorMsg("You can't withdraw right now. Lock period is not expired")
+                        return;
                     }
                     withdraw(params.row.name, account);
                     (() => {

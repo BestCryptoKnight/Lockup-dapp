@@ -229,10 +229,8 @@ const Staking: FC = () => {
                 flexDirection="column"
                 justifyContent="flex-start"
                 alignItems="center"
-                width="75%"
+                width="90%"
                 m="auto"
-                ml={isMobile ? "auto" : "300px"}
-                mb="auto"
                 zIndex="5"
                 mt="20px"
             >
