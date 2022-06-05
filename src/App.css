@@ -77,3 +77,20 @@
   line-height: 1.5;
   outline: none;
 }
+
+.zig_disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.card-container:hover {
+  transform: scale(1.05);
+  box-shadow: #26b8e9 0px 0 20px 2px !important;
+  transition: all 0.3s ease-out;
+}
+
+.card-view-container {
+  transform: scale(1);
+  box-shadow: #26b8e9 0px 0 10px 0px !important;
+  transition: all 0.3s ease-in  !important;
+}

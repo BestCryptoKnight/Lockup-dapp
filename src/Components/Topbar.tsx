@@ -18,6 +18,7 @@ import {
 
 interface SidebarProps {
     mode?: string;
+    onChangePage: (page: number) => void
 }
 
 const Topbar: FC<SidebarProps> = (props: SidebarProps) => {
@@ -60,8 +61,8 @@ const Topbar: FC<SidebarProps> = (props: SidebarProps) => {
             <Box fontSize="15px" display="flex" alignItems="center" width="50%">
                 {isMobile && <Box component="img" src={pieIcon} onClick={toggle} width="20px" style={{ cursor: 'pointer', objectFit: 'cover' }} alt="logo" mr="2.8vw" />}
                 {!isMobile ? <>
-                    <Box mr="50px" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Staking</Box>
-                    <Box style={{ cursor: 'pointer' }} onClick={() => navigate('/userInfo')}>User Information</Box>
+                    <Box mr="50px" style={{ cursor: 'pointer' }} onClick={() => props.onChangePage(0)}>Staking</Box>
+                    <Box style={{ cursor: 'pointer' }} onClick={() => props.onChangePage(1)}>User Information</Box>
                 </> : <Box color="#FCF686" style={{ cursor: 'pointer' }} onClick={openTopbar}>---</Box>}
             </Box>
             <Box display="flex" justifyContent="flex-end" alignItems="center" zIndex="10">
@@ -89,31 +90,6 @@ const Topbar: FC<SidebarProps> = (props: SidebarProps) => {
                 }
             </Box>
         </Box>
-        {/* <Box
-            display="flex"
-            position="absolute"
-            left="0"
-            top="51px"
-            alignItems="center"
-            py="7px"
-            bgcolor="#000"
-            width="-webkit-fill-available"
-            color="#FCF686"
-            pl="4.16vw"
-            pr="5.7vw"
-            flexDirection="column"
-            zIndex="20"
-            style={{transition: 'all 0.2s', transform: openToggle&&isMobile ? "translateY(0)": "translateY(-120%)"}}
-        >
-            <Box mb="25px" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Home</Box>
-            <Box mb="25px" style={{ cursor: 'pointer' }}><a href="https://leonidas-finance.gitbook.io/leonidas-finance-rebase-2.0/" target="blank" style={{ textDecoration: 'none', color: 'inherit' }}>Whitepaper</a></Box>
-            <Box mb="25px" style={{ cursor: 'pointer' }} onClick={() => navigate('/roadmap')}>Roadmap</Box>
-            <Box mb="25px" style={{ cursor: 'pointer' }}><a href="https://discord.gg/Wga5sWPRc6" target="blank" style={{ textDecoration: 'none', color: 'inherit' }}>Discord</a></Box>
-            <Box mb="25px" style={{ cursor: 'pointer' }} onClick={() => navigate('/presale')}>Whitelist Presale</Box>
-            <Box mb="25px" style={{ cursor: 'pointer' }}><a href="https://www.pinksale.finance/#/launchpad/0xa3071f57E542A692bd3495fd27aEC28F25051555?chain=AVAX" target="blank" style={{ textDecoration: 'none', color: 'inherit' }}>Public presale</a></Box>
-            <a href="https://www.pinksale.finance/#/launchpad/0xa3071f57E542A692bd3495fd27aEC28F25051555?chain=AVAX" target="blank"><Box component="img" mb="10px" src={kyc} onClick={toggle} width="60px" style={{ cursor: 'pointer' }} alt="logo"></Box></a>
-            <Box mb="20px" style={{ cursor: 'pointer' }} color="#E5C55A"><a href="https://twitter.com/AssureDefi/status/1510986021734912000" target="blank" style={{ textDecoration: 'none', color: 'inherit' }}>KYC</a></Box>
-        </Box> */}
     </Box>
 }
 

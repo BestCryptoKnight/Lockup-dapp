@@ -8,6 +8,9 @@ import {
     staking,
     getUserBalance,
     setNetworkProvider,
+    getUserUnclaimedRewardAll,
+    getTotalStakedAmmount,
+    getUserStakedInfo,
 } from "../hooks/useTokenInfo";
 import useAuth from "../hooks/useAuth";
 import Paper from "../Components/Paper";
@@ -22,9 +25,11 @@ import { CustomField } from "../Components/Global";
 import StakingInputComponent from "../Components/StakingInputComponent";
 import { Button } from "../Components/Button";
 import cx from "classnames";
+import _ from "lodash";
+import UserInfomationComponent from "../Components/UserInfomationComponent";
 // import Bottombar from "../Components/Bottombar";
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref,
 ) {
@@ -38,7 +43,7 @@ const Staking: FC = () => {
     const [claimableVal, setClaimableVal] = useState({ oldVal: 0, newVal: 0 })
     
 
-    const [TVL, setTVL] = useState({ oldVal: 0, newVal: 0 })
+    
     const [lpPrice, setLpPrice] = useState({ oldVal: 0, newVal: 0 })
     const [APR, setAPR] = useState({ oldVal: 0, newVal: 0 })
     const [LeoPrice, setLeoPrice] = useState({ oldVal: 0, newVal: 0 })
@@ -59,10 +64,16 @@ const Staking: FC = () => {
     const { account } = useAuth()
     const { isMobile } = useMobile()
     const [balance, setBalance] = useState({ oldVal: 0, newVal: 0 });
+    const [totalStakedAmount, setTotalStakedAmount] = useState({ oldVal: 0, newVal: 0 })
+    const [unCliamedRewardAll, setUnCliamedRewardAll] = useState({ oldVal: 0, newVal: 0 })
+    const [totalDailyReward, setTotalDailyReward] = useState({ oldVal: 0, newVal: 0 })
+    const [page, setPage] = useState(0);
 
     useEffect(()=>{
         (async()=>{
             setContract(await setNetworkProvider())
+            const _totalStakedAmount = await getTotalStakedAmmount();
+            setTotalStakedAmount({oldVal: totalStakedAmount.newVal, newVal: _totalStakedAmount})
         })()
     },[])
 
@@ -75,6 +86,16 @@ const Staking: FC = () => {
             else setOpenStakeWindow(false)
         })
         setPeriod(0);
+        getUserUnclaimedRewardAll(account).then(({totalReward})=>{
+            setUnCliamedRewardAll({oldVal: unCliamedRewardAll.newVal, newVal: totalReward})
+        });
+        getUserStakedInfo(account).then(({length, stakedInfo, dailyRewards})=>{
+            const val = _.reduce(dailyRewards, (prev, current)=>{
+                return Number(prev) + Number(current)
+            })
+            console.log(val)
+            setTotalDailyReward({oldVal: totalDailyReward.newVal, newVal: val / (10 ** 18)})
+        })
  
         // eslint-disable-next-line
     }, [account])
@@ -170,29 +191,37 @@ const Staking: FC = () => {
     //     // eslint-disable-next-line
     // }, [period]);
 
-    const onEvnet = () => {
-        if (!account) return;
-        contract.events.allEvents({
-            filter: { user: account, pid: 0 }, // Using an array means OR: e.g. 20 or 23
-            // fromBlock: 0
+    const onEvnet = async() => {
+        setContract(await setNetworkProvider())
+        const _totalStakedAmount = await getTotalStakedAmmount();
+        setTotalStakedAmount({oldVal: totalStakedAmount.newVal, newVal: _totalStakedAmount})
+        if(!account) return;
+        getBalance();
+        getAllowance(account).then((isAllowance) => {
+            if (isAllowance > 0) setOpenStakeWindow(true)
+            else setOpenStakeWindow(false)
         })
-            .on('data', function (event: any) {
-                console.log("evnet trigger", event)
-
+        setPeriod(0);
+        getUserUnclaimedRewardAll(account).then(({totalReward})=>{
+            setUnCliamedRewardAll({oldVal: unCliamedRewardAll.newVal, newVal: totalReward})
+        });
+        getUserStakedInfo(account).then(({length, stakedInfo, dailyRewards})=>{
+            const val = _.reduce(dailyRewards, (prev, current)=>{
+                return Number(prev) + Number(current)
             })
-            .on('changed', function (event: any) {
-            })
-            .on('error', console.error);
+            console.log(val)
+            setTotalDailyReward({oldVal: totalDailyReward.newVal, newVal: val / (10 ** 18)})
+        })
     }
 
     return <Box
         display="flex"
         flexDirection="column"
         width="100%"
-        style={{ background: 'url(/image/bg4.png)', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}
+        style={{ backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}
         zIndex="0"
     >
-        <Topbar mode="staking" />
+        <Topbar mode="staking" onChangePage={(page: number)=>{setPage(page)}} />
         <Box display="flex" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
             {/* <Sidebar /> */}
             <Box
@@ -216,43 +245,30 @@ const Staking: FC = () => {
                 </Box>
                 <Box display="flex" justifyContent={"center"} alignItems="center" mt="30px" mb="30px" sx={{ flexDirection: { md: 'row', sm: 'column', xs: 'column' } }}>
                     <Paper p="15px" mr="20px" sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '30px', xs: '30px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }}>
-                        <Box fontSize="16px" lineHeight="22px">Node Yearly ROI</Box>
+                        <Box fontSize="16px" lineHeight="22px">Avaliable Amount</Box>
                         <Box fontSize="24px" fontWeight={"500"} color={ratio.newVal > 1 ? "#FCF686" : "#6EF47A"}>
-                            <CountUp start={APR.oldVal * ratio.oldVal} decimal="." decimals={2} end={APR.newVal * ratio.newVal}
-                                useEasing={true} duration={1.2} />%
+                            <CountUp start={unCliamedRewardAll.oldVal} decimal="." decimals={2} end={unCliamedRewardAll.newVal}
+                                useEasing={true} duration={2} />
                         </Box>
                     </Paper>
                     <Paper p="15px" mr="20px" sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '30px', xs: '30px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }}>
-                        <Box fontSize="16px" lineHeight="22px">Current Daily ROI</Box>
+                        <Box fontSize="16px" lineHeight="22px">Totoal Staked</Box>
                         <Box fontSize="24px" fontWeight={"500"} color={ratio.newVal > 1 ? "#FCF686" : "#6EF47A"}>
-                            <CountUp start={APR.oldVal * ratio.oldVal / 365} decimal="." decimals={2} end={APR.newVal * ratio.newVal / 365}
-                                useEasing={true} duration={1.2} />%
+                            <CountUp start={totalStakedAmount.oldVal} decimal="." decimals={2} end={totalStakedAmount.newVal}
+                                useEasing={true} duration={2} />
                         </Box>
                     </Paper>
                     <Paper p="15px" mr="20px" sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '30px', xs: '30px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }}>
-                        <Box fontSize="16px" lineHeight="22px">TVL</Box>
-                        <Box fontSize="24px" fontWeight={"500"} color="#FCF686">$
-                            <CountUp start={roundWithPrecision(TVL.oldVal, 2)} decimal="." decimals={2} end={roundWithPrecision(TVL.newVal, 2)}
+                        <Box fontSize="16px" lineHeight="22px">Estimate Daily Income</Box>
+                        <Box fontSize="24px" fontWeight={"500"} color="#FCF686">
+                            <CountUp start={totalDailyReward.oldVal} decimal="." decimals={2} end={totalDailyReward.newVal}
                                 useEasing={true} duration={1.2} />
                         </Box>
                     </Paper>
-                    <Paper p="15px" sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '30px', xs: '30px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }}>
-                        <Box fontSize="16px" lineHeight="22px" textAlign='center'>Next Milestone For ROI Boost</Box>
-                        <Box fontSize="24px" fontWeight={"500"} color="#6EF47A">$
-                            <CountUp start={Math.ceil(TVL.oldVal / 250000) * 250000} decimal="." decimals={0} end={Math.ceil(TVL.newVal / 250000) * 250000}
-                                useEasing={true} duration={1.2} />
-                        </Box>
-                    </Paper>
-                    <Paper p="15px" mr="20px" sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '30px', xs: '30px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }}>
-                        <Box fontSize="16px" lineHeight="22px"> Daily ROI After Boost</Box>
-                        <Box fontSize="24px" fontWeight={"500"} color= "#6EF47A">
-                            <CountUp start={APR.oldVal * ratio.oldVal*1.5 / 365} decimal="." decimals={2} end={APR.newVal * ratio.newVal *1.5/ 365}
-                                useEasing={true} duration={1.2} />%
-                        </Box>
-                    </Paper>
+                    
                 </Box>
 
-                <Box display="flex" mb="30px" mt="100px" justifyContent={"center"} alignItems="center" width="500px" sx={{ flexDirection: { md: 'row', sm: 'column-reverse', xs: 'column-reverse' } }}>
+                {page === 0 ? <Box display="flex" mb="30px" mt="100px" justifyContent={"center"} alignItems="center" width="500px" sx={{ flexDirection: { md: 'row', sm: 'column-reverse', xs: 'column-reverse' } }}>
                     <Paper p="25px" borderRadius={'8px'} sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '50px', xs: '50px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }} flex={1} position="relative">
                         <Box fontSize="24px" lineHeight="26px" mb="20px">CheemsX STAKING</Box>
                         <Box my="20px"><CustomField value={name} onChange={onChangeName} placeholder="staking name" /></Box>
@@ -287,6 +303,9 @@ const Staking: FC = () => {
                         }
                     </Paper>
                 </Box>
+                :
+                <UserInfomationComponent onEvent={onEvnet} />
+                }
             </Box>
 
         </Box>
