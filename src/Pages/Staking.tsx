@@ -218,11 +218,11 @@ const Staking: FC = () => {
         display="flex"
         flexDirection="column"
         width="100%"
-        style={{ backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}
         zIndex="0"
+        height={"-webkit-fill-available"}
     >
         <Topbar mode="staking" onChangePage={(page: number)=>{setPage(page)}} />
-        <Box display="flex" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+        <Box display="flex" style={{ overflowY: 'auto', overflowX: 'hidden' }} height={"-webkit-fill-available"}>
             {/* <Sidebar /> */}
             <Box
                 display="flex"
