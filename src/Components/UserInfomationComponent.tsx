@@ -18,6 +18,8 @@ import {
     isClaimable,
     isWidthdraw,
     getTokenURI,
+    getStakedTokenURI,
+    UnStakeNFT,
 } from "../hooks/useTokenInfo";
 import useAuth from "../hooks/useAuth";
 import Paper from "../Components/Paper";
@@ -240,8 +242,28 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
             headerName: 'Amount',
             align: 'left',
             width: 130,
-            valueGetter: (params: GridValueGetterParams) => {
-                return Math.round(params.row.amount / 10 ** 18 * 100) / 100
+            renderCell: (params: any) => {
+                const onClick = async (e: any) => {
+                    e.stopPropagation(); // don't select this row after clicking
+                    console.log(params.row.NFTId)
+                    const uri = await getStakedTokenURI(params.row.StakeNFTId)
+                    console.log(uri)
+                    setUri(uri)
+                    setOpen(true)
+                };
+                return (Number(params.row.StakeNFTId) === 0 ? 
+                    <Box>{Math.round(params.row.amount / 10 ** 18 * 100) / 100}</Box>
+                    :
+                    <Box width="100%">
+                        {console.log(params.row.StakeNFTId)}
+                        <Button
+                            className={cx("bg_btn", {
+                            })}
+                            text='StakedNFT'
+                            // icon={<MdSwapCalls />}
+                            onClick={onClick}
+                        />
+                </Box>)
             },
             hideable: false,
         },
@@ -341,7 +363,9 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
                         setErrorMsg("You can't withdraw right now. Lock period is not expired")
                         return;
                     }
-                    withdraw(params.row.name, account);
+                    if(Number(params.row.StakeNFTId) === 0)
+                        withdraw(params.row.name, account);
+                    else UnStakeNFT(account, params.row.name);
                     (() => {
                         if (!account) return;
                         contract.events.Withdraw({

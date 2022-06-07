@@ -22,6 +22,7 @@ export interface StakedInfo{
     lastClaimed: number
     name: string
     NFTId: number
+    StakeNFTId: number
 }
 
 export const setNetworkProvider = async () => {
@@ -61,7 +62,7 @@ export const approve = async (account?: string) => {
 }
 
 export const isExistStakingName = async(name: string) => {
-    if (!name) return false;
+    if (!name) return true;
     const Lockup = await setNetworkProvider();
     return await Lockup.methods.isExistStakeId(name).call();
 }
@@ -102,6 +103,7 @@ export const getUserStakedInfo = async(account: string) => {
         tmp.lastClaimed = item.lastClaimed;
         tmp.name = item.name;
         tmp.NFTId = item.NFTId;
+        tmp.StakeNFTId = item.NFTStakingId;
         stakedInfo.push(tmp)
     })
     return {length:res[0], stakedInfo, dailyRewards: res.dailyReward}
@@ -163,4 +165,24 @@ export const getUserNFT =async (address:string) => {
         tokenInfo.push(tmp)
     }
     return tokenInfo;
+}
+
+export const StakeNFT = async (address: string, name: string, tokenId: number) => {
+    const Lockup = await setNetworkProvider();
+    const StakingNFTAddr = await Lockup.methods.StakeNFT().call();
+    const NFTContract = await new window.web3.eth.Contract(ERC721ABI, StakingNFTAddr);
+    await NFTContract.methods.approve(process.env.REACT_APP_CONTRACT_ADDR, tokenId);
+    await Lockup.methods.stakeNFT(name, tokenId).send({from : address})
+}
+
+export const UnStakeNFT = async (address: string, name: string) => {
+    const Lockup = await setNetworkProvider();
+    await Lockup.methods.unStakeNFT(name).send({from : address})
+}
+
+export const getStakedTokenURI = async(id: number) => {
+    const Lockup = await setNetworkProvider();
+    const nftAddr = await Lockup.methods.StakeNFT().call();
+    const NFTContract = await new window.web3.eth.Contract(ERC721ABI, nftAddr);
+    return await NFTContract.methods.tokenURI(id).call();
 }
