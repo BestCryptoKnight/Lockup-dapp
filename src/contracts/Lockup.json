@@ -1,5 +1,9 @@
 [
-  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -92,6 +96,31 @@
       }
     ],
     "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "DepositNFT",
     "type": "event"
   },
   {
@@ -272,36 +301,85 @@
   },
   {
     "inputs": [],
+    "name": "StakeNFT",
+    "outputs": [
+      {
+        "internalType": "contract IERC721Metadata",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "USDC",
     "outputs": [
-      { "internalType": "contract IERC20", "name": "", "type": "address" }
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "blockList",
     "outputs": [
-      { "internalType": "uint256", "name": "blockNumber", "type": "uint256" },
-      { "internalType": "uint256", "name": "totalStaked", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "blockNumber",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalStaked",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "canWithdrawPrimaryToken",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "uri", "type": "string" },
-      { "internalType": "uint8", "name": "tie", "type": "uint8" }
+      {
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
+      },
+      {
+        "internalType": "uint8",
+        "name": "tie",
+        "type": "uint8"
+      }
     ],
     "name": "changeDefaultNFTUri",
     "outputs": [],
@@ -311,27 +389,49 @@
   {
     "inputs": [],
     "name": "claimFee",
-    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "claimFeeAmount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "claimFeeAmountLimit",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "string[]", "name": "ids", "type": "string[]" }
+      {
+        "internalType": "string[]",
+        "name": "ids",
+        "type": "string[]"
+      }
     ],
     "name": "claimMulti",
     "outputs": [],
@@ -339,14 +439,26 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "name": "claimReward",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "name": "compound",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -354,7 +466,11 @@
   },
   {
     "inputs": [
-      { "internalType": "string[]", "name": "ids", "type": "string[]" }
+      {
+        "internalType": "string[]",
+        "name": "ids",
+        "type": "string[]"
+      }
     ],
     "name": "compoundMulti",
     "outputs": [],
@@ -362,54 +478,51 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
-    "name": "displayNFT",
-    "outputs": [
-      { "internalType": "string[]", "name": "uris", "type": "string[]" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "distributionPeriod",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "divisor",
-    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getBlockLength",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
-    "name": "getLastClaimedTime",
     "outputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "bool", "name": "", "type": "bool" }
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
     ],
-    "name": "getLastClaimedTimeList",
+    "name": "getLastClaimedTime",
     "outputs": [
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -417,44 +530,147 @@
   {
     "inputs": [],
     "name": "getTime",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "string[]",
+        "name": "nameList",
+        "type": "string[]"
+      }
     ],
-    "name": "getUserNFTInfo",
+    "name": "getUserNFT",
     "outputs": [
-      { "internalType": "uint256", "name": "length", "type": "uint256" },
       {
         "components": [
-          { "internalType": "address", "name": "user", "type": "address" },
-          { "internalType": "uint256", "name": "amount", "type": "uint256" },
-          { "internalType": "uint8", "name": "tie", "type": "uint8" },
-          { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8",
+                "name": "tie",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IERC721Metadata.NFTInfo",
+            "name": "NFTList",
+            "type": "tuple"
+          },
+          {
+            "internalType": "string",
+            "name": "uri",
+            "type": "string"
+          }
         ],
-        "internalType": "struct IERC721.NFTInfo[]",
+        "internalType": "struct Lockup.UserNFTInfo[]",
+        "name": "userInfo",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserNFT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "tie",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IERC721Metadata.NFTInfo[]",
         "name": "NFTList",
         "type": "tuple[]"
       },
-      { "internalType": "string[]", "name": "uris", "type": "string[]" }
+      {
+        "internalType": "string[]",
+        "name": "uris",
+        "type": "string[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "getUserStakedInfo",
     "outputs": [
-      { "internalType": "uint256", "name": "length", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      },
       {
         "components": [
-          { "internalType": "int128", "name": "duration", "type": "int128" },
-          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          {
+            "internalType": "int128",
+            "name": "duration",
+            "type": "int128"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "stakedTime",
@@ -470,9 +686,26 @@
             "name": "blockListIndex",
             "type": "uint256"
           },
-          { "internalType": "bool", "name": "available", "type": "bool" },
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "uint256", "name": "NFTId", "type": "uint256" }
+          {
+            "internalType": "bool",
+            "name": "available",
+            "type": "bool"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "NFTId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "NFTStakingId",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct Lockup.StakeInfo[]",
         "name": "info",
@@ -488,45 +721,129 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "getUserStakedNFT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "irreversibleAmount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "irreversibleAmountLimit",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
-    "name": "isClaimable",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
-    "name": "isExistStakeId",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
-    "name": "isWithdrawable",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "token", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "address[]", "name": "recipients", "type": "address[]" }
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "isClaimable",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "isExistStakeId",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "isWithdrawable",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "recipients",
+        "type": "address[]"
+      }
     ],
     "name": "multiWithdrawTokens",
     "outputs": [],
@@ -535,9 +852,21 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "oldname", "type": "string" },
-      { "internalType": "string", "name": "newName", "type": "string" },
-      { "internalType": "int128", "name": "duration", "type": "int128" }
+      {
+        "internalType": "string",
+        "name": "oldname",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "newName",
+        "type": "string"
+      },
+      {
+        "internalType": "int128",
+        "name": "duration",
+        "type": "int128"
+      }
     ],
     "name": "newDeposit",
     "outputs": [],
@@ -545,16 +874,49 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "onERC721Received",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "pair",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -568,14 +930,26 @@
   {
     "inputs": [],
     "name": "rewardClaimInterval",
-    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "rewardPoolBalance",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -594,8 +968,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "token", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "sendToken",
     "outputs": [],
@@ -603,14 +985,26 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint8", "name": "fee", "type": "uint8" }],
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "fee",
+        "type": "uint8"
+      }
+    ],
     "name": "setClaimFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "val", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "val",
+        "type": "uint256"
+      }
+    ],
     "name": "setClaimFeeAmountLimit",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -618,7 +1012,24 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_period", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setDefaultAmountForNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_period",
+        "type": "uint256"
+      }
     ],
     "name": "setDistributionPeriod",
     "outputs": [],
@@ -627,7 +1038,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint8", "name": "_divisor", "type": "uint8" }
+      {
+        "internalType": "uint8",
+        "name": "_divisor",
+        "type": "uint8"
+      }
     ],
     "name": "setDivisor",
     "outputs": [],
@@ -635,7 +1050,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "val", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "val",
+        "type": "uint256"
+      }
+    ],
     "name": "setIrreversibleAmountLimit",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -643,7 +1064,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "interval", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "interval",
+        "type": "uint256"
+      }
     ],
     "name": "setMinInterval",
     "outputs": [],
@@ -665,7 +1090,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint8", "name": "_interval", "type": "uint8" }
+      {
+        "internalType": "uint8",
+        "name": "_interval",
+        "type": "uint8"
+      }
     ],
     "name": "setRewardInterval",
     "outputs": [],
@@ -674,7 +1103,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_balance", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_balance",
+        "type": "uint256"
+      }
     ],
     "name": "setRewardPoolBalance",
     "outputs": [],
@@ -683,7 +1116,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "wallet", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "wallet",
+        "type": "address"
+      }
     ],
     "name": "setRewardWallet",
     "outputs": [],
@@ -692,7 +1129,24 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "tokenAddr", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "nftAddr",
+        "type": "address"
+      }
+    ],
+    "name": "setStakeNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddr",
+        "type": "address"
+      }
     ],
     "name": "setStakingToken",
     "outputs": [],
@@ -701,7 +1155,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "walletAddr", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "walletAddr",
+        "type": "address"
+      }
     ],
     "name": "setTreasuryWallet",
     "outputs": [],
@@ -710,9 +1168,21 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "int128", "name": "duration", "type": "int128" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "int128",
+        "name": "duration",
+        "type": "int128"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "stake",
     "outputs": [],
@@ -720,21 +1190,78 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakeNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "name": "stakedUserList",
     "outputs": [
-      { "internalType": "int128", "name": "duration", "type": "int128" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "stakedTime", "type": "uint256" },
-      { "internalType": "uint256", "name": "lastClaimed", "type": "uint256" },
+      {
+        "internalType": "int128",
+        "name": "duration",
+        "type": "int128"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "stakedTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastClaimed",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "blockListIndex",
         "type": "uint256"
       },
-      { "internalType": "bool", "name": "available", "type": "bool" },
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "uint256", "name": "NFTId", "type": "uint256" }
+      {
+        "internalType": "bool",
+        "name": "available",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "NFTId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "NFTStakingId",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -743,7 +1270,11 @@
     "inputs": [],
     "name": "stakingToken",
     "outputs": [
-      { "internalType": "contract IERC20", "name": "", "type": "address" }
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -751,14 +1282,26 @@
   {
     "inputs": [],
     "name": "thresholdMinimum",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "totalStaked",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -771,7 +1314,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
     "outputs": [],
@@ -780,8 +1327,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address[]", "name": "recipient", "type": "address[]" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address[]",
+        "name": "recipient",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "transferToAddressFromContract",
     "outputs": [],
@@ -789,17 +1344,37 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "name": "unClaimedReward",
     "outputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "bool", "name": "", "type": "bool" }
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "string", "name": "name", "type": "string" }],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
     "name": "unStake",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -814,38 +1389,113 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "int128", "name": "period", "type": "int128" },
-      { "internalType": "bool", "name": "all", "type": "bool" }
+      {
+        "internalType": "string[]",
+        "name": "name",
+        "type": "string[]"
+      }
+    ],
+    "name": "unStakeMulti",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "unStakeNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "int128",
+        "name": "period",
+        "type": "int128"
+      },
+      {
+        "internalType": "bool",
+        "name": "all",
+        "type": "bool"
+      }
     ],
     "name": "unclaimedAllRewards",
     "outputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
     "name": "userInfoList",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "token", "type": "address" },
-      { "internalType": "address", "name": "sender", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "withdrawToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  { "stateMutability": "payable", "type": "receive" }
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
 ]

@@ -11,6 +11,7 @@ import {
     getUserUnclaimedRewardAll,
     getTotalStakedAmmount,
     getUserStakedInfo,
+    getUserNFT,
 } from "../hooks/useTokenInfo";
 import useAuth from "../hooks/useAuth";
 import Paper from "../Components/Paper";
@@ -68,6 +69,7 @@ const Staking: FC = () => {
     const [unCliamedRewardAll, setUnCliamedRewardAll] = useState({ oldVal: 0, newVal: 0 })
     const [totalDailyReward, setTotalDailyReward] = useState({ oldVal: 0, newVal: 0 })
     const [page, setPage] = useState(0);
+    const [userNFT, setUserNFT] = useState<{tokenId: number, uri: string}[]>([]);
 
     useEffect(()=>{
         (async()=>{
@@ -96,7 +98,10 @@ const Staking: FC = () => {
             console.log(val)
             setTotalDailyReward({oldVal: totalDailyReward.newVal, newVal: val / (10 ** 18)})
         })
- 
+        getUserNFT(account).then((val: any)=>{
+            setUserNFT(val);
+            console.log(val);
+        })
         // eslint-disable-next-line
     }, [account])
 
@@ -266,7 +271,7 @@ const Staking: FC = () => {
                     
                 </Box>
 
-                {page === 0 ? <Box display="flex" mb="30px" mt="100px" justifyContent={"center"} alignItems="center" width="500px" sx={{ flexDirection: { md: 'row', sm: 'column-reverse', xs: 'column-reverse' } }}>
+                {page === 0 ? <Box display="flex" mb="30px" mt="100px" justifyContent={"center"} alignItems="center" width="1000px" sx={{ flexDirection: { md: 'row', sm: 'column-reverse', xs: 'column-reverse' } }}>
                     <Paper p="25px" borderRadius={'8px'} sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '50px', xs: '50px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }} flex={1} position="relative">
                         <Box fontSize="24px" lineHeight="26px" mb="20px">CheemsX STAKING</Box>
                         <Box my="20px"><CustomField value={name} onChange={onChangeName} placeholder="staking name" /></Box>
@@ -299,6 +304,17 @@ const Staking: FC = () => {
                                 onClick={stake}
                             />
                         }
+                    </Paper>
+                    <Paper p="25px" borderRadius={'8px'} sx={{ mr: { md: '20px', sm: '0', xs: '0' }, mb: { md: '0', sm: '50px', xs: '50px' }, width: { md: 'auto', sm: '300px', xs: '300px' } }} flex={1} position="relative">
+                        <Box display="flex" width="100%" minHeight={'290px'}></Box>
+                        <Button
+                            loading={isLoading}
+                            className={cx("bg_btn", {
+                            })}
+                            text="NFTStaking"
+                            // icon={<MdSwapCalls />}
+                            onClick={stake}
+                        />
                     </Paper>
                 </Box>
                 :

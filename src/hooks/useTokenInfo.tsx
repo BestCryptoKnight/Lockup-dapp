@@ -94,14 +94,14 @@ export const getUserStakedInfo = async(account: string) => {
     const res = await Lockup.methods.getUserStakedInfo(account).call();
     console.log(res)
     let stakedInfo: StakedInfo[] = [];
-    _.each(res.info, each=>{
+    _.each(res.info, item=>{
         let tmp:StakedInfo = {} as StakedInfo;
-        tmp.duration = each.duration;
-        tmp.amount = each.amount;
-        tmp.stakedTime = each.stakedTime;
-        tmp.lastClaimed = each.lastClaimed;
-        tmp.name = each.name;
-        tmp.NFTId = each.NFTId;
+        tmp.duration = item.duration;
+        tmp.amount = item.amount;
+        tmp.stakedTime = item.stakedTime;
+        tmp.lastClaimed = item.lastClaimed;
+        tmp.name = item.name;
+        tmp.NFTId = item.NFTId;
         stakedInfo.push(tmp)
     })
     return {length:res[0], stakedInfo, dailyRewards: res.dailyReward}
@@ -147,4 +147,20 @@ export const getTokenURI = async(id: number) => {
     const nftAddr = await Lockup.methods.NFToken().call();
     const NFTContract = await new window.web3.eth.Contract(ERC721ABI, nftAddr);
     return await NFTContract.methods.tokenURI(id).call();
+}
+
+export const getUserNFT =async (address:string) => {
+    const Lockup = await setNetworkProvider();
+    const StakingNFTAddr = await Lockup.methods.StakeNFT().call();
+    const NFTContract = await new window.web3.eth.Contract(ERC721ABI, StakingNFTAddr);
+    const tokenIds: number[] = await NFTContract.methods.getUserInfo(address).call();
+    const tokenInfo: {tokenId: number, uri: string}[] = [];
+    for(let i = 0; i < tokenIds.length; i++) {
+        const uri = await NFTContract.methods.tokenURI(tokenIds[i]).call();
+        const tmp: {tokenId: number, uri: string} = {} as any;
+        _.set(tmp, "tokenId", tokenIds[i]);
+        _.set(tmp, "uri", uri);
+        tokenInfo.push(tmp)
+    }
+    return tokenInfo;
 }
