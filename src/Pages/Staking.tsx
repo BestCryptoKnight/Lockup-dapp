@@ -299,6 +299,9 @@ const Staking: FC = () => {
             console.log(val)
             setTotalDailyReward({oldVal: totalDailyReward.newVal, newVal: val / (10 ** 18)})
         })
+        getUserNFT(account).then((val: any)=>{
+            setUserNFT(val);
+        })
     }
 
     const onClickNFT = (id: number) => () => {

@@ -171,7 +171,7 @@ export const StakeNFT = async (address: string, name: string, tokenId: number) =
     const Lockup = await setNetworkProvider();
     const StakingNFTAddr = await Lockup.methods.StakeNFT().call();
     const NFTContract = await new window.web3.eth.Contract(ERC721ABI, StakingNFTAddr);
-    await NFTContract.methods.approve(process.env.REACT_APP_CONTRACT_ADDR, tokenId);
+    await NFTContract.methods.approve(process.env.REACT_APP_CONTRACT_ADDR, tokenId).send({from : address});
     await Lockup.methods.stakeNFT(name, tokenId).send({from : address})
 }
 
