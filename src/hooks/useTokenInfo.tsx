@@ -186,3 +186,13 @@ export const getStakedTokenURI = async(id: number) => {
     const NFTContract = await new window.web3.eth.Contract(ERC721ABI, nftAddr);
     return await NFTContract.methods.tokenURI(id).call();
 }
+
+export const isWhiteList = async(account: string) => {
+    const Lockup = await setNetworkProvider();
+    return await Lockup.methods.whiteList(account).call();
+}
+
+export const isBlackList = async(account: string) => {
+    const Lockup = await setNetworkProvider();
+    return await Lockup.methods.blackList(account).call();
+}

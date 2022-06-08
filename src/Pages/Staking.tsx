@@ -13,6 +13,8 @@ import {
     getUserStakedInfo,
     getUserNFT,
     StakeNFT,
+    isWhiteList,
+    isBlackList
 } from "../hooks/useTokenInfo";
 import useAuth from "../hooks/useAuth";
 import Paper from "../Components/Paper";
@@ -73,12 +75,15 @@ const Staking: FC = () => {
     const [page, setPage] = useState(0);
     const [userNFT, setUserNFT] = useState<{tokenId: number, uri: string}[]>([]);
     const [selectedNFT, setSelectedNFT] = useState(0);
+    const [whiteListed, setWhiteList] = useState(false);
+    const [blackListed, setBlackList] = useState(false);
 
     useEffect(()=>{
         (async()=>{
             setContract(await setNetworkProvider())
             const _totalStakedAmount = await getTotalStakedAmmount();
             setTotalStakedAmount({oldVal: totalStakedAmount.newVal, newVal: _totalStakedAmount})
+
         })()
     },[])
 
@@ -104,6 +109,21 @@ const Staking: FC = () => {
         getUserNFT(account).then((val: any)=>{
             setUserNFT(val);
             console.log(val);
+        })
+        
+        isBlackList(account).then((res: boolean)=>{
+            setBlackList(res)
+            isWhiteList(account).then((res: boolean) => {
+                setWhiteList(res);
+                if(blackListed) {
+                    setErrorMsg("You are in BlockList")
+                    return;
+                }
+                if(res) {
+                    setErrorMsg("Not in hiteList")
+                    return;
+                }
+            })
         })
         // eslint-disable-next-line
     }, [account])
@@ -131,6 +151,10 @@ const Staking: FC = () => {
     }
 
     const stake = async() => {
+        if(blackListed || !whiteListed) {
+            setErrorMsg("You are permitted")
+            return;
+        }
         setLoading(true);
         const _stakingAmount = Number.isNaN(stakingAmount) ? 0 : Number(stakingAmount);
         if(_stakingAmount === 0) {
@@ -188,6 +212,10 @@ const Staking: FC = () => {
     }
 
     const NFTStaking = async() => {
+        if(blackListed || !whiteListed) {
+            setErrorMsg("You are permitted")
+            return;
+        }
         if(selectedNFT === 0) {
             setErrorMsg("please select your NFT")
             setLoading(false);

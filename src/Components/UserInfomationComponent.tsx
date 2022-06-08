@@ -51,6 +51,7 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
     const [curTime, setCurTime] = useState(0);
     const [selectedIds, setSelectedIds] = useState<any[]>([]);
     const [isCliamable, setIsCliamable] = useState(true)
+    const [isCompoundable, setIsCompoundable] = useState(true)
     const [open, setOpen] = useState(false);
     const [uri, setUri] = useState("")
 
@@ -154,6 +155,14 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
                 return;
             }
             setIsCliamable(true);
+        }
+        for (let i = 0; i < selectionModel.length; i++) {
+            const v: any = _.find(stakeInfo, { id: selectionModel[i] });
+            if (v.StakeNFTId) {
+                setIsCompoundable(false);
+                return;
+            }
+            setIsCompoundable(true);
         }
     }
 
@@ -418,7 +427,7 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
                 <Button
                     loading={isLoading}
                     className={cx("bg_btn", {
-                        zig_disabled: !isCliamable || !isSelected()
+                        zig_disabled: !isCliamable || !isSelected() || !isCompoundable
                     })}
                     text="Compund"
                     // icon={<MdSwapCalls />}
@@ -437,14 +446,14 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
                 /> */}
             </Box>
             <Box>
-                <Button
+                {/* <Button
                     loading={isLoading}
                     className={cx("bg_btn", {
                     })}
                     text="WithdrawAll"
                     // icon={<MdSwapCalls />}
                     onClick={_withrawAll}
-                />
+                /> */}
             </Box>
         </Box>
 
