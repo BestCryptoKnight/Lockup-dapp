@@ -119,8 +119,8 @@ const Staking: FC = () => {
                     setErrorMsg("You are in BlockList")
                     return;
                 }
-                if(res) {
-                    setErrorMsg("Not in hiteList")
+                if(!res) {
+                    setErrorMsg("Not in whiteList")
                     return;
                 }
             })
