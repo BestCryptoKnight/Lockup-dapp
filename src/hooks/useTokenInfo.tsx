@@ -61,10 +61,10 @@ export const approve = async (account?: string) => {
     return await Cheemsx.methods.approve(process.env.REACT_APP_CONTRACT_ADDR, '0x99999999999999999999999999999999999999').send({ from: account });
 }
 
-export const isExistStakingName = async(name: string) => {
+export const isExistStakingName = async(name: string, account: string) => {
     if (!name) return true;
     const Lockup = await setNetworkProvider();
-    return await Lockup.methods.isExistStakeId(name).call();
+    return await Lockup.methods.isExistStakeId(name).call({from : account});
 }
 
 export const staking = async(name: string, duration: number, amount: number, account: string) => {
@@ -75,26 +75,26 @@ export const staking = async(name: string, duration: number, amount: number, acc
 export const getUserUnclaimedRewardAll = async(account: string) => {
     const Lockup = await setNetworkProvider();
     console.log("***********************************asdf")
-    const res = await Lockup.methods.unclaimedAllRewards(account, 0, true).call();
+    const res = await Lockup.methods.unclaimedAllRewards(account, 0, true).call({from : account});
     console.log("***********************************",res)
     return res / Math.pow(10, 18);
 }
 
-export const getUserUnclaimRewardByName = async(name: string) => {
+export const getUserUnclaimRewardByName = async(name: string, account: string) => {
     const Lockup = await setNetworkProvider();
-    const res = await Lockup.methods.unClaimedReward(name).call();
+    const res = await Lockup.methods.unClaimedReward(name).call({from : account});
     return res[1] ? res[0] : null;
 }
 
-export const getTotalStakedAmmount = async() => {
+export const getTotalStakedAmmount = async(account: string) => {
     const Lockup = await setNetworkProvider();
-    return await Lockup.methods.totalStaked().call() / Math.pow(10, 18);
+    return await Lockup.methods.totalStaked().call({from : account}) / Math.pow(10, 18);
 }
 
 export const getUserStakedInfo = async(account: string) => {
     const Lockup = await setNetworkProvider();
-    Lockup.methods.getUserStakedInfo(account).call();
-    const res = await Lockup.methods.getUserStakedInfo(account).call();
+    Lockup.methods.getUserStakedInfo(account).call({from : account});
+    const res = await Lockup.methods.getUserStakedInfo(account).call({from : account});
     let stakedInfo: StakedInfo[] = [];
     _.each(res.info, item=>{
         let tmp:StakedInfo = {} as StakedInfo;
@@ -135,14 +135,14 @@ export const withdrawAll = async(account: string) => {
     Lockup.methods.unStakeAll().send({from : account})
 }
 
-export const isWidthdraw = async(name: string) => {
+export const isWidthdraw = async(name: string, account: string) => {
     const Lockup = await setNetworkProvider();
-    return Lockup.methods.isWithdrawable(name).call();
+    return Lockup.methods.isWithdrawable(name).call({from : account});
 }
 
-export const isClaimable = async(name: string) => {
+export const isClaimable = async(name: string, account: string) => {
     const Lockup = await setNetworkProvider();
-    return Lockup.methods.isClaimable(name).call();
+    return Lockup.methods.isClaimable(name).call({from : account});
 }
 
 export const getTokenURI = async(id: number) => {

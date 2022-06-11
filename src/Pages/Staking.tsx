@@ -81,7 +81,7 @@ const Staking: FC = () => {
     useEffect(()=>{
         (async()=>{
             setContract(await setNetworkProvider())
-            const _totalStakedAmount = await getTotalStakedAmmount();
+            const _totalStakedAmount = await getTotalStakedAmmount(account);
             setTotalStakedAmount({oldVal: totalStakedAmount.newVal, newVal: _totalStakedAmount})
 
         })()
@@ -169,7 +169,7 @@ const Staking: FC = () => {
             return;
         }
         try{
-            const isUnique = await isExistStakingName(name);
+            const isUnique = await isExistStakingName(name, account);
             if(isUnique) {
                 setErrorMsg("Duplicated name, please name again")
                 setLoading(false);
@@ -229,7 +229,7 @@ const Staking: FC = () => {
         }
         
         try{
-            const isUnique = await isExistStakingName(nftName);
+            const isUnique = await isExistStakingName(nftName, account);
             if(isUnique) {
                 setErrorMsg("Duplicated name, please name again")
                 setLoading(false);
@@ -309,7 +309,7 @@ const Staking: FC = () => {
 
     const onEvnet = async() => {
         setContract(await setNetworkProvider())
-        const _totalStakedAmount = await getTotalStakedAmmount();
+        const _totalStakedAmount = await getTotalStakedAmmount(account);
         setTotalStakedAmount({oldVal: totalStakedAmount.newVal, newVal: _totalStakedAmount})
         if(!account) return;
         getBalance();

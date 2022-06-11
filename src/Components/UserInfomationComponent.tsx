@@ -58,7 +58,7 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
     useEffect(() => {
         (async () => {
             setContract(await setNetworkProvider())
-            const _totalStakedAmount = await getTotalStakedAmmount();
+            const _totalStakedAmount = await getTotalStakedAmmount(account);
             setTotalStakedAmount({ oldVal: totalStakedAmount.newVal, newVal: _totalStakedAmount })
             setCurTime(await getTime());
         })()
@@ -77,7 +77,7 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
         getUserStakedInfo(account).then(async ({ length, stakedInfo, dailyRewards }) => {
             const info: (StakedInfo & { unClaimed: number | null } & { dailyReward: number } & { id: number })[] = [];
             _.map(stakedInfo, async (each, index) => {
-                const uncliam = await getUserUnclaimRewardByName(each.name);
+                const uncliam = await getUserUnclaimRewardByName(each.name, account);
                 let tmp: (StakedInfo & { unClaimed: number | null } & { dailyReward: number } & { id: number })
                 tmp = {
                     ...each,
@@ -149,7 +149,7 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
         setSelectedIds(selectionModel);
         for (let i = 0; i < selectionModel.length; i++) {
             const v: any = _.find(stakeInfo, { id: selectionModel[i] });
-            const claimable = await isClaimable(v.name)
+            const claimable = await isClaimable(v.name, account)
             if (!claimable) {
                 setIsCliamable(false);
                 return;
@@ -368,7 +368,7 @@ const UserInfomationComponent: FC<{onEvent: ()=>void}> = (props: {onEvent: ()=>v
             renderCell: (params: any) => {
                 const onClick = async(e: any) => {
                     e.stopPropagation(); // don't select this row after clicking
-                    if (!await isWidthdraw(params.row.name)) {
+                    if (!await isWidthdraw(params.row.name, account)) {
                         setErrorMsg("You can't withdraw right now. Lock period is not expired")
                         return;
                     }
