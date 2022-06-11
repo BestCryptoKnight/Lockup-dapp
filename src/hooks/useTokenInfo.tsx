@@ -74,7 +74,9 @@ export const staking = async(name: string, duration: number, amount: number, acc
 
 export const getUserUnclaimedRewardAll = async(account: string) => {
     const Lockup = await setNetworkProvider();
+    console.log("***********************************asdf")
     const res = await Lockup.methods.unclaimedAllRewards(account, 0, true).call();
+    console.log("***********************************",res)
     return res / Math.pow(10, 18);
 }
 
@@ -93,7 +95,6 @@ export const getUserStakedInfo = async(account: string) => {
     const Lockup = await setNetworkProvider();
     Lockup.methods.getUserStakedInfo(account).call();
     const res = await Lockup.methods.getUserStakedInfo(account).call();
-    console.log(res)
     let stakedInfo: StakedInfo[] = [];
     _.each(res.info, item=>{
         let tmp:StakedInfo = {} as StakedInfo;
