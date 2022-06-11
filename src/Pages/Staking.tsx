@@ -96,7 +96,8 @@ const Staking: FC = () => {
             else setOpenStakeWindow(false)
         })
         setPeriod(0);
-        getUserUnclaimedRewardAll(account).then(({totalReward})=>{
+        getUserUnclaimedRewardAll(account).then((totalReward: number)=>{
+            console.log("------------------", totalReward)
             setUnCliamedRewardAll({oldVal: unCliamedRewardAll.newVal, newVal: totalReward})
         });
         getUserStakedInfo(account).then(({length, stakedInfo, dailyRewards})=>{
@@ -151,7 +152,7 @@ const Staking: FC = () => {
     }
 
     const stake = async() => {
-        if(blackListed || !whiteListed) {
+        if(blackListed) {
             setErrorMsg("You are permitted")
             return;
         }
@@ -184,7 +185,7 @@ const Staking: FC = () => {
                     .on('data', function (event: any) {
                         console.log("evnet trigger", event)
                         getBalance();
-                        getUserUnclaimedRewardAll(account).then(({totalReward})=>{
+                        getUserUnclaimedRewardAll(account).then((totalReward: number)=>{
                             setUnCliamedRewardAll({oldVal: unCliamedRewardAll.newVal, newVal: totalReward})
                         });
                         getUserStakedInfo(account).then(({length, stakedInfo, dailyRewards})=>{
@@ -212,7 +213,7 @@ const Staking: FC = () => {
     }
 
     const NFTStaking = async() => {
-        if(blackListed || !whiteListed) {
+        if(blackListed) {
             setErrorMsg("You are permitted")
             return;
         }
@@ -237,7 +238,7 @@ const Staking: FC = () => {
             await StakeNFT(account, nftName, selectedNFT);
             (() => {
                 if (!account) return;
-                getUserUnclaimedRewardAll(account).then(({totalReward})=>{
+                getUserUnclaimedRewardAll(account).then((totalReward: number)=>{
                     setUnCliamedRewardAll({oldVal: unCliamedRewardAll.newVal, newVal: totalReward})
                 });
                 getUserStakedInfo(account).then(({length, stakedInfo, dailyRewards})=>{
@@ -317,14 +318,13 @@ const Staking: FC = () => {
             else setOpenStakeWindow(false)
         })
         setPeriod(0);
-        getUserUnclaimedRewardAll(account).then(({totalReward})=>{
+        getUserUnclaimedRewardAll(account).then((totalReward: number)=>{
             setUnCliamedRewardAll({oldVal: unCliamedRewardAll.newVal, newVal: totalReward})
         });
         getUserStakedInfo(account).then(({length, stakedInfo, dailyRewards})=>{
             const val = _.reduce(dailyRewards, (prev, current)=>{
                 return Number(prev) + Number(current)
             })
-            console.log(val)
             setTotalDailyReward({oldVal: totalDailyReward.newVal, newVal: val / (10 ** 18)})
         })
         getUserNFT(account).then((val: any)=>{
